@@ -1,0 +1,22 @@
+dataset: {ids_path: './data/downstream_tasks/retrieval/smi_mapper_retrieval.json',
+sfs_path: './data/downstream_tasks/retrieval/sfs_mapper_retrieval.json',
+ipc_path: './data/downstream_tasks/retrieval/ipc_mapper_retrieval.json',
+mlg_path: './data/downstream_tasks/retrieval/smi_mapper_retrieval.json',
+frac: 0.0,
+}
+
+gnn_config: './config/gnn_config.json'
+iupac_config: './config/iupac_config.json'
+selfies_config: './config/selfies_config.json'
+fusion_config: './config/fusion_config.json'
+train_config: './config/train_config.json'
+
+
+mol_width: 512
+embed_dim: 256
+batch_size: 64
+temp: 0.07
+msm_probability: 0.15
+quene_size: 65536
+momentum: 0.995
+alpha: 0.0

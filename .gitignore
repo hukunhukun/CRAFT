@@ -1,0 +1,35 @@
+# Python
+__pycache__
+*.pyc
+*.egg-info
+dist
+
+# Log
+*.log
+*.log.*
+*.json
+*.jsonl
+
+# Data
+data
+
+# Editor
+.idea
+*.swp
+
+# Other
+wandb
+output
+
+checkpoints
+ckpts*
+pre_train
+downstream
+downstream_without_pretrain
+
+.ipynb_checkpoints
+*.ipynb
+
+# DevContainer
+!.devcontainer/*
+
