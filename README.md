@@ -17,18 +17,51 @@ conda install -c conda-forge rdkit
 ```
 
 ### 1.3. Install Dependencies
-```bash
-pip install -r requirements.txt 
-```
 
-or 
 clone the repository
 ```bash
 git clone https://github.com/hukunhukun/CRAFT.git
 cd CRAFT
 ```
 
+```bash
+pip install -r requirements.txt 
+```
+or 
 
 ```bash
 pip install -e .
+```
+
+### 1.4. Import the CRAFT package
+
+```bash 
+pip install craft_mol
+```
+
+## 2. Model weights
+Download the model weights from the huggingface and place them in the `weights` directory.
+```bash
+git lfs install
+git clone https://huggingface.co/kunkunhu/craft_mol
+```
+
+
+
+
+## 3. Usage
+Get molecular representations from three molecular modalities (SELFIES, Molecular Graph and IUPAC names)
+
+```python
+from craft_mol import batch_feature
+
+model_path = '/your_path/1m_checkpoint_09.pth'
+config_path = '/your_path/pre_train.yaml'
+batch_feature = BatchFeature(model_path,config_path)
+
+smiles = "CC(C)CC1=CC=C(C=C1)C(=O)O"
+iupac_name = "4-(2-methylpropyl)benzoic acid"
+
+mol_feature = batch_feature.get_feature_single(smiles=smiles, iupac_name=iupac_name)
+print(mol_feature.shape)
 ```

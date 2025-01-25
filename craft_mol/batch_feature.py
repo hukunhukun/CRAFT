@@ -1,12 +1,12 @@
-from dataset.data4csv import Data4CSV
-from dataset.data4csv import Data4CSV_collate
+from .dataset.data4csv import Data4CSV
+from .dataset.data4csv import Data4CSV_collate
 from torch.utils.data import DataLoader
 import torch
 from model.TMMF import TMMF
 import ruamel.yaml as yaml
 import os
 from tqdm import tqdm
-from dataclasses import dataclass,field
+from dataclasses import field
 from rdkit.Chem import AllChem
 
 
@@ -46,7 +46,7 @@ class BatchFeature:
         self.model = get_model(model_path, device, config_path)
         self.device = device
     
-    def get_feature_single(self, smiles:str, iupac_name:str, selfies:str=None, mol_ids=None):
+    def get_feature_single(self, smiles:str, iupac_name:str, selfies:str=None, mlg_ids=None):
         from dataset.tokenizer import Iupac_tokenizer,Selfies_tokenizer
         from dataset.atom_rep import mol_to_graph_data_obj_simple
         ipc_tokenizer = Iupac_tokenizer()

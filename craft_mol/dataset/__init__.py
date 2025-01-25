@@ -1,4 +1,5 @@
-from dataset.data import SIGDataset, SIG_collate, ipcMapper, sfsMapper, mlgMapper, FinetuneDataset, Finetune_collate_C, Finetune_collate_R
+from .data import SIGDataset, SIG_collate, ipcMapper, sfsMapper, mlgMapper, FinetuneDataset, Finetune_collate_C, Finetune_collate_R
+from .data4csv import Data4CSV, Data4CSV_collate
 from torch.utils.data import DataLoader
 import torch
 from rdkit import Chem
