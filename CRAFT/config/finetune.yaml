@@ -1,0 +1,23 @@
+
+dataset: {'bbbp' : './config/bbbp.json', 'bace' : './config/bace.json','clintox':'./config/clintox.json','tox21':'./config/tox21.json','sider':'./config/sider.json',
+'esol':'./config/esol.json','freesolv':'./config/freesolv.json','lipo':'./config/lipo.json'}
+
+
+gnn_config: './config/gnn_config.json'
+iupac_config: './config/iupac_config.json'
+selfies_config: './config/selfies_config.json'
+fusion_config: './config/fusion_config.json'
+
+fine_tune_config: './config/fine_tune_config.json'
+
+mol_width: 512
+embed_dim: 256
+batch_size: 64
+temp: 0.07
+msm_probability: 0.15
+quene_size: 4096
+momentum: 0.995
+alpha: 0.4
+
+optimizer: {opt: adamW, lr: 5e-5, weight_decay: 0.0002}
+schedular: {sched: cosine, lr: 5e-5, epochs: 100, min_lr: 1e-5, decay_rate: 1, warmup_lr: 1e-4, warmup_epochs: 100, cooldown_epochs: 0}

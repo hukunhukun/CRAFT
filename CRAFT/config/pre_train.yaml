@@ -1,0 +1,25 @@
+dataset: {ids_path: './data/smi_mapper_train.json',
+sfs_path: './data/sfs_mapper_train.json',
+ipc_path: './data/ipc_mapper_train.json',
+mlg_path: './data/smi_mapper_train.json',
+frac: 0.2,
+batch_size: 16}
+
+gnn_config: './config/gnn_config.json'
+iupac_config: './config/iupac_config.json'
+selfies_config: './config/selfies_config.json'
+fusion_config: './config/fusion_config.json'
+train_config: './config/train_config.json'
+
+
+mol_width: 512
+embed_dim: 256
+batch_size: 32
+temp: 0.07
+msm_probability: 0.15
+quene_size: 65536
+momentum: 0.995
+alpha: 0.4
+
+optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.02}
+schedular: {sched: cosine, lr: 1e-4, epochs: 10, min_lr: 1e-5, decay_rate: 1, warmup_lr: 1e-5, warmup_epochs: 10, cooldown_epochs: 0}
