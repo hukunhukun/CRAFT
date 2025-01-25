@@ -29,6 +29,7 @@ downstream_without_pretrain
 
 .ipynb_checkpoints
 *.ipynb
+*.sh
 
 # DevContainer
 !.devcontainer/*
