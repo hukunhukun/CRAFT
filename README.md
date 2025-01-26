@@ -53,11 +53,11 @@ git clone https://huggingface.co/kunkunhu/craft_mol
 Get molecular representations from three molecular modalities (SELFIES, Molecular Graph and IUPAC names)
 
 ```python
-from craft_mol import batch_feature
+from craft_mol.batch_feature import BatchFeature
 
-model_path = '/your_path/1m_checkpoint_09.pth'
-config_path = '/your_path/pre_train.yaml'
-batch_feature = BatchFeature(model_path,config_path)
+model_path = './craft_mol/1m_checkpoint_09.pth'
+config_path = './craft_mol/inference.yaml'
+batch_feature = BatchFeature(model_path=model_path,config_path=config_path)
 
 smiles = "CC(C)CC1=CC=C(C=C1)C(=O)O"
 iupac_name = "4-(2-methylpropyl)benzoic acid"

@@ -5,11 +5,11 @@ mlg_path: './data/smi_mapper_train.json',
 frac: 0.2,
 batch_size: 16}
 
-gnn_config: './config/gnn_config.json'
-iupac_config: './config/iupac_config.json'
-selfies_config: './config/selfies_config.json'
-fusion_config: './config/fusion_config.json'
-train_config: './config/train_config.json'
+gnn_config: 'craft_mol/config/gnn_config.json'
+iupac_config: 'craft_mol/config/iupac_config.json'
+selfies_config: 'craft_mol/config/selfies_config.json'
+fusion_config: 'craft_mol/config/fusion_config.json'
+train_config: 'craft_mol/config/train_config.json'
 
 
 mol_width: 512

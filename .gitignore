@@ -20,7 +20,7 @@ data
 # Other
 wandb
 output
-
+model_weights
 checkpoints
 ckpts*
 pre_train

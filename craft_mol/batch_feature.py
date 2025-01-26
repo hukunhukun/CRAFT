@@ -2,7 +2,7 @@ from .dataset.data4csv import Data4CSV
 from .dataset.data4csv import Data4CSV_collate
 from torch.utils.data import DataLoader
 import torch
-from model.TMMF import TMMF
+from .model.TMMF import TMMF
 import ruamel.yaml as yaml
 import os
 from tqdm import tqdm
@@ -47,8 +47,8 @@ class BatchFeature:
         self.device = device
     
     def get_feature_single(self, smiles:str, iupac_name:str, selfies:str=None, mlg_ids=None):
-        from dataset.tokenizer import Iupac_tokenizer,Selfies_tokenizer
-        from dataset.atom_rep import mol_to_graph_data_obj_simple
+        from .dataset.tokenizer import Iupac_tokenizer,Selfies_tokenizer
+        from .dataset.atom_rep import mol_to_graph_data_obj_simple
         ipc_tokenizer = Iupac_tokenizer()
         ipc_ids = ipc_tokenizer.convert_tokens_to_ids(ipc_tokenizer.tokenize(iupac_name))
         ipc_ids = [ipc_tokenizer.convert_tokens_to_ids(['[CLS]'])[0]] + ipc_ids + [ipc_tokenizer.convert_tokens_to_ids(['[EOS]'])[0]]

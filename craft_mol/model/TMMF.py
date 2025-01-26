@@ -2,8 +2,8 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-from model.bert import BertForMaskSM,bert_encoder
-from model.gnn import GNN_graphpred
+from .bert import BertForMaskSM,bert_encoder
+from .gnn import GNN_graphpred
 
 import json
 
