@@ -1,8 +1,9 @@
 from .dataset.data4csv import Data4CSV
 from .dataset.data4csv import Data4CSV_collate
+from .dataset.data4json import JsonDataset,JsonDataset_collate
 from torch.utils.data import DataLoader
 import torch
-from .model.TMMF import TMMF
+from model.TMMF import TMMF
 import ruamel.yaml as yaml
 import os
 from tqdm import tqdm
@@ -11,13 +12,25 @@ from rdkit.Chem import AllChem
 
 
 
-def get_data_loader(data_path, batch_size, shuffle=False):
+def get_data_loader_csv(data_path, batch_size, shuffle=False):
     Data4CSV_dataset = Data4CSV(data_path, selfies_max_len=130, iupac_max_len=130)
     dataloader = DataLoader(
         Data4CSV_dataset,
         batch_size=batch_size,
         shuffle=shuffle,
         collate_fn=Data4CSV_collate,
+        drop_last=False  
+    )
+
+    return dataloader
+
+def get_data_loader_json(data_path, batch_size, shuffle=False):
+    Json_dataset = JsonDataset(data_path, selfies_max_len=130, iupac_max_len=130)
+    dataloader = DataLoader(
+        Json_dataset,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        collate_fn=JsonDataset_collate,
         drop_last=False  
     )
 
@@ -76,12 +89,20 @@ class BatchFeature:
         return out
 
     def get_feature(self, data_path:str=None, batch_size:int=32,output_dir:str=None):
-        dataloader = get_data_loader(data_path, batch_size, shuffle=False)
+        if data_path.endswith('.csv'):
+            dataloader = get_data_loader_csv(data_path, batch_size, shuffle=False)
+        elif data_path.endswith('.json'):
+            dataloader = get_data_loader_json(data_path, batch_size, shuffle=False)
+        else:
+            raise ValueError('Data path should be a csv or json file')
         os.makedirs(output_dir, exist_ok=True)
 
 
         for index,batch in enumerate(tqdm(dataloader, desc="Processing batches", unit="batch")):
-            cids = batch['cids']
+            if data_path.endswith('.csv'):
+                cids = batch['cids']
+            elif data_path.endswith('.json'):
+                cids = batch['ids']
             selfies_tokens = batch['selfies_tokens'].to(self.device)  
             iupac_tokens = batch['iupac_tokens'].to(self.device) 
             mol_graph = batch['mol_graph'].to(self.device) 
@@ -101,8 +122,8 @@ class BatchFeature:
 
 if __name__ == '__main__':
     model_path = './pre_train/1m_checkpoint_09.pth'
-    data_path = './data/pubchem324k/combined_pubchem_data.csv'
-    output_dir = './data/pubchem324k/output_features'
+    data_path = '/home/hukun/code/trimodal_code/craft_mol/data/Mol-Instructions/data/Molecule-oriented_Instructions/molecular_description_generation/test_data.json'
+    output_dir = '/home/hukun/code/trimodal_code/craft_mol/data/Mol-Instructions/data/Molecule-oriented_Instructions/molecular_description_generation/test_output_features'
     batch_size = 32
 
     batch_feature = BatchFeature(model_path)
