@@ -3,7 +3,7 @@ from .dataset.data4csv import Data4CSV_collate
 from .dataset.data4json import JsonDataset,JsonDataset_collate
 from torch.utils.data import DataLoader
 import torch
-from model.TMMF import TMMF
+from .model.TMMF import TMMF
 import ruamel.yaml as yaml
 import os
 from tqdm import tqdm
