@@ -283,7 +283,7 @@ class BertForMaskSM(nn.Module):
                                      iupac_mol_mask=iupac_mol_mask,
                                      mode='fusion')
         if mode == 'output':
-            return output[:,0,:]
+            return output[:,:,:]
         output = self.softmax(self.fc(output))
 
         if labels is not None:

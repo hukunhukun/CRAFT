@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "craft-mol"
-version = "1.3"
+version = "1.4"
 description = "CRAFT: Consistent Representational Fusion of Three Molecular Modalities."
 readme = "README.md"
 license = { file = "LICENSE" }
