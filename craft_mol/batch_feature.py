@@ -12,8 +12,14 @@ from rdkit.Chem import AllChem
 
 
 
-def get_data_loader_csv(data_path, batch_size, shuffle=False):
-    Data4CSV_dataset = Data4CSV(data_path, selfies_max_len=130, iupac_max_len=130)
+def get_data_loader_csv(data_path, 
+                        batch_size, 
+                        shuffle=False,
+                        CID_name:str='CID',
+                        smiles_name:str='smiles',
+                        iupac_name:str='iupac name',
+                        selfies_name:str=None):
+    Data4CSV_dataset = Data4CSV(data_path, selfies_max_len=130, iupac_max_len=130, CID_name=CID_name, smiles_name=smiles_name, iupac_name=iupac_name, selfies_name=selfies_name)
     dataloader = DataLoader(
         Data4CSV_dataset,
         batch_size=batch_size,
@@ -24,8 +30,20 @@ def get_data_loader_csv(data_path, batch_size, shuffle=False):
 
     return dataloader
 
-def get_data_loader_json(data_path, batch_size, shuffle=False):
-    Json_dataset = JsonDataset(data_path, selfies_max_len=130, iupac_max_len=130)
+def get_data_loader_json(data_path, 
+                        batch_size, 
+                        shuffle=False,
+                        CID_name:str='id',
+                        smiles_name:str='input',
+                        iupac_name:str='iupac name',
+                        selfies_name:str=None):
+    Json_dataset = JsonDataset(data_path, 
+                               selfies_max_len=130, 
+                               iupac_max_len=130,
+                               CID_name=CID_name,
+                               smiles_name=smiles_name,
+                               iupac_name=iupac_name,
+                               selfies_name=selfies_name)
     dataloader = DataLoader(
         Json_dataset,
         batch_size=batch_size,
@@ -88,11 +106,29 @@ class BatchFeature:
 
         return out
 
-    def get_feature(self, data_path:str=None, batch_size:int=32,output_dir:str=None):
+    def get_feature(self, data_path:str=None, 
+                    batch_size:int=32,
+                    output_dir:str=None,
+                    CID_name:str='CID',
+                    smiles_name:str='smiles',
+                    iupac_name:str='iupac name',
+                    selfies_name:str=None):
         if data_path.endswith('.csv'):
-            dataloader = get_data_loader_csv(data_path, batch_size, shuffle=False)
+            dataloader = get_data_loader_csv(data_path, 
+                                             batch_size, 
+                                             shuffle=False,
+                                             CID_name=CID_name,
+                                             smiles_name=smiles_name,
+                                             iupac_name=iupac_name,
+                                             selfies_name=selfies_name)
         elif data_path.endswith('.json'):
-            dataloader = get_data_loader_json(data_path, batch_size, shuffle=False)
+            dataloader = get_data_loader_json(data_path, 
+                                              batch_size, 
+                                              shuffle=False,                                             
+                                              CID_name=CID_name,
+                                              smiles_name=smiles_name,
+                                              iupac_name=iupac_name,
+                                              selfies_name=selfies_name)
         else:
             raise ValueError('Data path should be a csv or json file')
         os.makedirs(output_dir, exist_ok=True)

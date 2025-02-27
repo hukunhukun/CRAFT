@@ -9,7 +9,15 @@ from .atom_rep import mol_to_graph_data_obj_simple
 
 
 class Data4CSV(Dataset):
-    def __init__(self, csv_path, selfies_max_len, iupac_max_len):
+    def __init__(self, 
+                 csv_path:str=None, 
+                 selfies_max_len:int=130, 
+                 iupac_max_len:int=130, 
+                 CID_name:str='CID',
+                 smiles_name:str=None,
+                 iupac_name:str='iupac name',
+                 selfies_name:str=None
+                 ):
         """
         Initialize the dataset.
         
@@ -20,7 +28,10 @@ class Data4CSV(Dataset):
         """
         self.selfies_max_len = selfies_max_len
         self.iupac_max_len = iupac_max_len
-        
+        self.CID_name = CID_name
+        self.smiles_name = smiles_name
+        self.iupac_name = iupac_name
+        self.selfies_name = selfies_name
 
         self.data = pd.read_csv(csv_path)
         
@@ -49,14 +60,17 @@ class Data4CSV(Dataset):
         """
 
         row = self.data.iloc[idx]
-        cid = int(row['CID'])
-        smiles = row['SMILES']
-        selfies = None
-        try:
-            selfies = sf.encoder(smiles)
-        except:
-            pass
-        iupac_name = row['iupac name']
+        cid = int(row[self.CID_name])
+        if self.selfies_name is not None:
+            selfies = row[self.selfies_name]
+        else:
+            smiles = row[self.smiles_name]
+            selfies = None
+            try:
+                selfies = sf.encoder(smiles)
+            except:
+                pass
+        iupac_name = row[self.iupac_name]
         
         # Initialize the output
         output = {

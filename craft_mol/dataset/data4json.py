@@ -9,7 +9,14 @@ from .atom_rep import mol_to_graph_data_obj_simple
 
 
 class JsonDataset(Dataset):
-    def __init__(self, json_path, selfies_max_len, iupac_max_len):
+    def __init__(self, 
+                 json_path:str=None, 
+                 selfies_max_len:int=130, 
+                 iupac_max_len:int=130,
+                 CID_name:str='CID',
+                 smiles_name:str='input',
+                 iupac_name:str='iupac name',
+                 selfies_name:str=None):
         """
         Initialize the dataset.
 
@@ -20,6 +27,11 @@ class JsonDataset(Dataset):
         """
         self.selfies_max_len = selfies_max_len
         self.iupac_max_len = iupac_max_len
+        self.CID_name = CID_name
+        self.smiles_name = smiles_name
+        self.iupac_name = iupac_name
+        self.selfies_name = selfies_name
+
 
         # Load JSON data
         with open(json_path, 'r', encoding='utf-8') as f:
@@ -47,10 +59,17 @@ class JsonDataset(Dataset):
             dict: Processed data sample.
         """
         sample = self.data[idx]
-
-        smiles = sample['input']
-        iupac_name = sample.get('iupac_name', None)
-        sample_id = sample['id']
+        if self.selfies_name is not None:
+            selfies = sample[self.selfies_name]
+        else:
+            smiles = sample[self.smiles_name]
+            selfies = None
+            try:
+                selfies = sf.encoder(smiles)
+            except:
+                pass
+        iupac_name = sample.get(self.iupac_name, None)
+        sample_id = sample[self.CID_name]
 
         # Initialize the output dictionary
         output = {
@@ -65,11 +84,7 @@ class JsonDataset(Dataset):
             output['iupac_tokens'] = self._get_iupac_tokens(iupac_name)
 
         # Convert SMILES to SELFIES
-        selfies = None
-        try:
-            selfies = sf.encoder(smiles)
-        except:
-            pass
+
 
         # Process SELFIES if available
         if selfies:
