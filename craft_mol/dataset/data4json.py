@@ -59,10 +59,10 @@ class JsonDataset(Dataset):
             dict: Processed data sample.
         """
         sample = self.data[idx]
+        smiles = sample[self.smiles_name]
         if self.selfies_name is not None:
             selfies = sample[self.selfies_name]
         else:
-            smiles = sample[self.smiles_name]
             selfies = None
             try:
                 selfies = sf.encoder(smiles)

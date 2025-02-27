@@ -61,10 +61,10 @@ class Data4CSV(Dataset):
 
         row = self.data.iloc[idx]
         cid = int(row[self.CID_name])
+        smiles = row[self.smiles_name]
         if self.selfies_name is not None:
             selfies = row[self.selfies_name]
         else:
-            smiles = row[self.smiles_name]
             selfies = None
             try:
                 selfies = sf.encoder(smiles)
