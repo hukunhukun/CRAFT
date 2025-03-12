@@ -104,7 +104,7 @@ class BatchFeature:
 
         out = self.model.get_fusion_feature(mlg_ids,ipc_ids,sfs_ids)
 
-        return out
+        return out, mlg_ids, ipc_ids, sfs_ids
 
     def get_feature(self, data_path:str=None, 
                     batch_size:int=32,
